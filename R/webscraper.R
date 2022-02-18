@@ -15,8 +15,13 @@ introTable <- summaryPage %>%
   html_table() 
 
 # store our values
+# schedule number is the primary id for how proerties are stored on the site
 denverPropertyDF$scheduleNumber <- as.character(introTable[[1]][2,3])
+
+# legal description is how the address is listed by the city (not street address)
 denverPropertyDF$legalDescription <- as.character(introTable[[1]][2,4])
+
+# property type describes if it is residential single family etc
 denverPropertyDF$propertyType <- as.character(introTable[[1]][2,5])
 denverPropertyDF$taxDistrict <- as.character(introTable[[1]][2,6])
 
@@ -109,4 +114,5 @@ for(entry in 1:(nrow(titleTable[[2]])/2)){
   
 }
 
+# convert our list to a structured data frame
 denverPropertyDF <- do.call("data.frame", denverPropertyDF)
