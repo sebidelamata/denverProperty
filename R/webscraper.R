@@ -1,3 +1,10 @@
+#' Scrapes denver property website for data for a single parcel
+#' 
+#' @param parcelID A string containing the parcel ID for the property
+#' @param rowNumber A number containing the row number for this property parcel
+#' 
+#'  @example webscraper("0503111031031", 1) 
+
 
 # import packages
 library(rvest)

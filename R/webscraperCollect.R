@@ -1,3 +1,5 @@
 
-
-# gotta get the local data first to get the parcel id vector
+# read in our vector of parcel ids
+parcelVector <- readRDS(
+  "..//data//parcelVector.Rds"
+)
