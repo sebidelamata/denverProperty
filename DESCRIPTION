@@ -10,7 +10,10 @@ Authors@R:
 Description: What the package does (one paragraph).
 Imports:
 	dplyr,
-	rvest
+	rvest,
+	httr,
+	robotstxt,
+	memoise
 License: What license it uses
 Encoding: UTF-8
 LazyData: true

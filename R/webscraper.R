@@ -17,7 +17,7 @@ webscraper <- function(){
   denverPropertyDF <- list()
   
   # let's read a sample web page of of the denver property records
-  summaryPage <- rvest::read_html("https://www.denvergov.org/Property/realproperty/summary/0503111031031")
+  summaryPage <- polite_read_html("https://www.denvergov.org/Property/realproperty/summary/0503111031031")
   
   # let's grab the intro data (minus the owner's name for privacy and decency reasons)
   introTable <- summaryPage %>% 
@@ -104,7 +104,7 @@ webscraper <- function(){
   denverPropertyDF$zoningCode <- as.character(summaryTable[[1]][4,4])
   
   # let's read a the chain of title page for the property on the denver property records
-  chainOfTitlePage <- rvest::read_html("https://www.denvergov.org/property/realproperty/chainoftitle/0503111031031")
+  chainOfTitlePage <- polite_read_html("https://www.denvergov.org/property/realproperty/chainoftitle/0503111031031")
   
   # let's grab the intro data (minus the owner's name for privacy and decency reasons)
   titleTable <- chainOfTitlePage %>% 
