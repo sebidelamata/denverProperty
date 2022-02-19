@@ -23,6 +23,8 @@ denverPropertyDF$legalDescription <- as.character(introTable[[1]][2,4])
 
 # property type describes if it is residential single family etc
 denverPropertyDF$propertyType <- as.character(introTable[[1]][2,5])
+
+# tax district for the property
 denverPropertyDF$taxDistrict <- as.character(introTable[[1]][2,6])
 
 # now grab our summary table
@@ -89,9 +91,6 @@ denverPropertyDF$finishedBasement <- as.numeric(
 # zoning code
 denverPropertyDF$zoningCode <- as.character(summaryTable[[1]][4,4])
 
-# shows the last sale document type (eg "WD" written deed "QC" quit claim)
-denverPropertyDF$documentType <- as.character(as.character(summaryTable[[1]][5,4]))
-
 # let's read a the chain of title page for the property on the denver property records
 chainOfTitlePage <- read_html("https://www.denvergov.org/property/realproperty/chainoftitle/0503111031031")
 
@@ -106,12 +105,20 @@ for(entry in 1:(nrow(titleTable[[2]])/2)){
   # date recorded for the last sale of this property
   denverPropertyDF[[paste("lastSaleDate", entry, sep="")]] <- as.Date(
     as.character(titleTable[[2]][entry*2,4]), 
-    format = "%m/%d/%y"
+    format = "%m/%d/%Y"
     )
 
   # last price this property was sold for
-  denverPropertyDF[[paste("lastSalePrice", entry, sep="")]] <- as.character(titleTable[[2]][entry*2,5])
+  denverPropertyDF[[paste("lastSalePrice", entry, sep="")]] <- as.numeric(
+    gsub(
+      "[$,]",
+      "",
+      as.character(titleTable[[2]][entry*2,5])
+      )
+  )
   
+  # instrument this property was sold through (wd = written deed, qc = quitclaim)
+  denverPropertyDF[[paste("lastContractInstrument", entry, sep="")]] <- as.character(titleTable[[2]][entry*2,3])
 }
 
 # convert our list to a structured data frame
