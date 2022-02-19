@@ -12,12 +12,18 @@
 #'  
 #' @export
 
-webscraper <- function(){
+webscraper <- function(parcelID, rowNumber=1){
+  
   # create an empty list to hold our unstructured data (we will convert this into a data frame later)
   denverPropertyDF <- list()
   
   # let's read a sample web page of of the denver property records
-  summaryPage <- polite_read_html("https://www.denvergov.org/Property/realproperty/summary/0503111031031")
+  summaryPage <- polite_read_html(
+    paste0(
+      "https://www.denvergov.org/Property/realproperty/summary/",
+      parcelID
+      )
+    )
   
   # let's grab the intro data (minus the owner's name for privacy and decency reasons)
   introTable <- summaryPage %>% 
@@ -104,7 +110,12 @@ webscraper <- function(){
   denverPropertyDF$zoningCode <- as.character(summaryTable[[1]][4,4])
   
   # let's read a the chain of title page for the property on the denver property records
-  chainOfTitlePage <- polite_read_html("https://www.denvergov.org/property/realproperty/chainoftitle/0503111031031")
+  chainOfTitlePage <- polite_read_html(
+    paste0(
+      "https://www.denvergov.org/property/realproperty/chainoftitle/",
+      parcelID
+      )
+    )
   
   # let's grab the intro data (minus the owner's name for privacy and decency reasons)
   titleTable <- chainOfTitlePage %>% 

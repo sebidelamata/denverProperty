@@ -10,7 +10,7 @@ parcelVector <- readRDS(
 )
 
 # run our webscraper script to return a single row stored in a list object
-scrapedPropertyData <- webscraper()
+scrapedPropertyData <- webscraper("0503111031031")
 
 return(scrapedPropertyData)
 
