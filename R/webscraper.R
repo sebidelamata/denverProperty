@@ -100,16 +100,16 @@ titleTable <- chainOfTitlePage %>%
   html_table() 
 
 # create a for loop to create a varying number of columns based on the number of previous sales
-for(entry in 1:(nrow(titleTable[[2]])/2)){
+lapply(1:(nrow(titleTable[[2]])/2), function(entry){
   
   # date recorded for the last sale of this property
-  denverPropertyDF[[paste("lastSaleDate", entry, sep="")]] <- as.Date(
+  denverPropertyDF[[paste("lastSaleDate", entry, sep="")]] <<- as.Date(
     as.character(titleTable[[2]][entry*2,4]), 
     format = "%m/%d/%Y"
     )
 
   # last price this property was sold for
-  denverPropertyDF[[paste("lastSalePrice", entry, sep="")]] <- as.numeric(
+  denverPropertyDF[[paste("lastSalePrice", entry, sep="")]] <<- as.numeric(
     gsub(
       "[$,]",
       "",
@@ -118,8 +118,9 @@ for(entry in 1:(nrow(titleTable[[2]])/2)){
   )
   
   # instrument this property was sold through (wd = written deed, qc = quitclaim)
-  denverPropertyDF[[paste("lastContractInstrument", entry, sep="")]] <- as.character(titleTable[[2]][entry*2,3])
-}
+  denverPropertyDF[[paste("lastContractInstrument", entry, sep="")]] <<- as.character(titleTable[[2]][entry*2,3])
+  }
+)
 
 # convert our list to a structured data frame
 denverPropertyDF <- do.call("data.frame", denverPropertyDF)
