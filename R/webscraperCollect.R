@@ -3,7 +3,15 @@
 #' @export
 #' 
 
+webscraperCollect <- function(){
 # read in our vector of parcel ids
 parcelVector <- readRDS(
   ".//data//parcelVector.Rds"
 )
+
+# run our webscraper script to return a single row stored in a list object
+scrapedPropertyData <- webscraper()
+
+return(scrapedPropertyData)
+
+}
