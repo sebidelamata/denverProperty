@@ -1,25 +1,26 @@
 #' Scrapes denver property website for data for a single parcel
 #' 
+#' @import rvest
+#' @import dplyr
+#' 
 #' @param parcelID A string containing the parcel ID for the property
 #' @param rowNumber A number containing the row number for this property parcel
 #' 
-#'  @example webscraper("0503111031031", 1) 
+#' @example webscraper("0503111031031", 1) 
+#'  
+#' @export
 
-
-# import packages
-library(rvest)
-library(dplyr)
 
 # create an empty list to hold our unstructured data (we will convert this into a data frame later)
 denverPropertyDF <- list()
 
 # let's read a sample web page of of the denver property records
-summaryPage <- read_html("https://www.denvergov.org/Property/realproperty/summary/0503111031031")
+summaryPage <- rvest::read_html("https://www.denvergov.org/Property/realproperty/summary/0503111031031")
 
 # let's grab the intro data (minus the owner's name for privacy and decency reasons)
 introTable <- summaryPage %>% 
-  html_elements('#property-info-bar') %>% 
-  html_table() 
+  rvest::html_elements('#property-info-bar') %>% 
+  rvest::html_table() 
 
 # store our values
 # schedule number is the primary id for how proerties are stored on the site
@@ -35,7 +36,9 @@ denverPropertyDF$propertyType <- as.character(introTable[[1]][2,5])
 denverPropertyDF$taxDistrict <- as.character(introTable[[1]][2,6])
 
 # now grab our summary table
-summaryTable <- sampleProperty %>% html_elements('#property_summary') %>% html_table() 
+summaryTable <- summaryPage %>% 
+  rvest::html_elements('#property_summary') %>% 
+  rvest::html_table() 
 
 # store our values
 # building style
@@ -99,12 +102,12 @@ denverPropertyDF$finishedBasement <- as.numeric(
 denverPropertyDF$zoningCode <- as.character(summaryTable[[1]][4,4])
 
 # let's read a the chain of title page for the property on the denver property records
-chainOfTitlePage <- read_html("https://www.denvergov.org/property/realproperty/chainoftitle/0503111031031")
+chainOfTitlePage <- rvest::read_html("https://www.denvergov.org/property/realproperty/chainoftitle/0503111031031")
 
 # let's grab the intro data (minus the owner's name for privacy and decency reasons)
 titleTable <- chainOfTitlePage %>% 
-  html_elements('#no-more-tables') %>% 
-  html_table() 
+  rvest::html_elements('#no-more-tables') %>% 
+  rvest::html_table() 
 
 # create a for loop to create a varying number of columns based on the number of previous sales
 lapply(1:(nrow(titleTable[[2]])/2), function(entry){

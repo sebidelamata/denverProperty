@@ -1,0 +1,17 @@
+Package: denverpropertyr
+Title: A Package Exploring Denver Country Propert Data
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Miguel",
+           family = "de la Mata",
+           role = c("aut", "cre"),
+           email = "miguel.sebastian.de.la.mata@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+Imports:
+	dplyr,
+	rvest
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
