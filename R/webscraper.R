@@ -4,7 +4,6 @@
 #' @import dplyr
 #' 
 #' @param parcelID A string containing the parcel ID for the property
-#' @param rowNumber A number containing the row number for this property parcel
 #' 
 #' @examples webscraper("0503111031031", 1) 
 #' 
@@ -12,7 +11,7 @@
 #'  
 #' @export
 
-webscraper <- function(parcelID, rowNumber=1){
+webscraper <- function(parcelID){
   
   # create an empty list to hold our unstructured data (we will convert this into a data frame later)
   denverPropertyDF <- list()
@@ -146,7 +145,7 @@ webscraper <- function(parcelID, rowNumber=1){
   )
   
   # convert our list to a structured data frame
-  denverPropertyDF <- do.call("data.frame", denverPropertyDF)
+  # denverPropertyDF <- do.call("data.frame", denverPropertyDF)
   
   # return our data frame
   return(denverPropertyDF)

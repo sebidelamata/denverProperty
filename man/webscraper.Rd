@@ -4,12 +4,10 @@
 \alias{webscraper}
 \title{Scrapes denver property website for data for a single parcel}
 \usage{
-webscraper(parcelID, rowNumber = 1)
+webscraper(parcelID)
 }
 \arguments{
 \item{parcelID}{A string containing the parcel ID for the property}
-
-\item{rowNumber}{A number containing the row number for this property parcel}
 }
 \value{
 A list object containing data for a single property
